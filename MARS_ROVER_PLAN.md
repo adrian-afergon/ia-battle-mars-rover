@@ -329,11 +329,11 @@ src/ai-battle/app/
 - [x] Giro derecha implementado y testeado (N->E->S->W->N)
 - [x] Comando execute procesa 'l' y 'r' (14 tests de rotación)
 
-### Fase 4: Movimiento básico ⬜
-- [ ] Cálculo de siguiente posición
-- [ ] Movimiento adelante implementado
-- [ ] Movimiento atrás implementado
-- [ ] Comando execute procesa 'f' y 'b'
+### Fase 4: Movimiento básico ✅
+- [x] Cálculo de siguiente posición
+- [x] Movimiento adelante implementado y testeado
+- [x] Movimiento atrás implementado y testeado
+- [x] Comando execute procesa 'f' y 'b' (15 tests de movimiento)
 
 ### Fase 5: Wrapping ⬜
 - [ ] Wrapping en todos los bordes testeado

@@ -178,4 +178,157 @@ describe('Rover - Fase 2 (Basic)', () => {
       });
     });
   });
+
+  describe('Fase 4: Movement (F and B)', () => {
+    describe('move forward (F)', () => {
+      it('should move forward one step when facing North', () => {
+        const worldMap = new WorldMap(10, 10);
+        const rover = new Rover({ x: 5, y: 5 }, 'N', worldMap);
+
+        rover.execute('f');
+
+        expect(rover.getPosition()).toEqual({ x: 5, y: 6 });
+      });
+
+      it('should move forward one step when facing South', () => {
+        const worldMap = new WorldMap(10, 10);
+        const rover = new Rover({ x: 5, y: 5 }, 'S', worldMap);
+
+        rover.execute('f');
+
+        expect(rover.getPosition()).toEqual({ x: 5, y: 4 });
+      });
+
+      it('should move forward one step when facing East', () => {
+        const worldMap = new WorldMap(10, 10);
+        const rover = new Rover({ x: 5, y: 5 }, 'E', worldMap);
+
+        rover.execute('f');
+
+        expect(rover.getPosition()).toEqual({ x: 6, y: 5 });
+      });
+
+      it('should move forward one step when facing West', () => {
+        const worldMap = new WorldMap(10, 10);
+        const rover = new Rover({ x: 5, y: 5 }, 'W', worldMap);
+
+        rover.execute('f');
+
+        expect(rover.getPosition()).toEqual({ x: 4, y: 5 });
+      });
+
+      it('should move forward multiple steps', () => {
+        const worldMap = new WorldMap(10, 10);
+        const rover = new Rover({ x: 5, y: 5 }, 'N', worldMap);
+
+        rover.execute('ff');
+
+        expect(rover.getPosition()).toEqual({ x: 5, y: 7 });
+      });
+    });
+
+    describe('move backward (B)', () => {
+      it('should move backward one step when facing North', () => {
+        const worldMap = new WorldMap(10, 10);
+        const rover = new Rover({ x: 5, y: 5 }, 'N', worldMap);
+
+        rover.execute('b');
+
+        expect(rover.getPosition()).toEqual({ x: 5, y: 4 });
+      });
+
+      it('should move backward one step when facing South', () => {
+        const worldMap = new WorldMap(10, 10);
+        const rover = new Rover({ x: 5, y: 5 }, 'S', worldMap);
+
+        rover.execute('b');
+
+        expect(rover.getPosition()).toEqual({ x: 5, y: 6 });
+      });
+
+      it('should move backward one step when facing East', () => {
+        const worldMap = new WorldMap(10, 10);
+        const rover = new Rover({ x: 5, y: 5 }, 'E', worldMap);
+
+        rover.execute('b');
+
+        expect(rover.getPosition()).toEqual({ x: 4, y: 5 });
+      });
+
+      it('should move backward one step when facing West', () => {
+        const worldMap = new WorldMap(10, 10);
+        const rover = new Rover({ x: 5, y: 5 }, 'W', worldMap);
+
+        rover.execute('b');
+
+        expect(rover.getPosition()).toEqual({ x: 6, y: 5 });
+      });
+
+      it('should move backward multiple steps', () => {
+        const worldMap = new WorldMap(10, 10);
+        const rover = new Rover({ x: 5, y: 5 }, 'N', worldMap);
+
+        rover.execute('bb');
+
+        expect(rover.getPosition()).toEqual({ x: 5, y: 3 });
+      });
+    });
+
+    describe('mixed forward and backward', () => {
+      it('should return to original position with forward then backward', () => {
+        const worldMap = new WorldMap(10, 10);
+        const rover = new Rover({ x: 5, y: 5 }, 'N', worldMap);
+
+        rover.execute('fb');
+
+        expect(rover.getPosition()).toEqual({ x: 5, y: 5 });
+      });
+
+      it('should return to original position with backward then forward', () => {
+        const worldMap = new WorldMap(10, 10);
+        const rover = new Rover({ x: 5, y: 5 }, 'N', worldMap);
+
+        rover.execute('bf');
+
+        expect(rover.getPosition()).toEqual({ x: 5, y: 5 });
+      });
+
+      it('should handle complex movement pattern', () => {
+        const worldMap = new WorldMap(10, 10);
+        const rover = new Rover({ x: 5, y: 5 }, 'N', worldMap);
+
+        rover.execute('ffbfb');
+
+        expect(rover.getPosition()).toEqual({ x: 5, y: 6 });
+      });
+    });
+
+    describe('position history', () => {
+      it('should track position history during forward movement', () => {
+        const worldMap = new WorldMap(10, 10);
+        const rover = new Rover({ x: 5, y: 5 }, 'N', worldMap);
+
+        const result = rover.execute('ff');
+
+        expect(result.positionHistory).toEqual([
+          { x: 5, y: 5 },
+          { x: 5, y: 6 },
+          { x: 5, y: 7 },
+        ]);
+      });
+
+      it('should track position history with mixed commands', () => {
+        const worldMap = new WorldMap(10, 10);
+        const rover = new Rover({ x: 0, y: 0 }, 'N', worldMap);
+
+        const result = rover.execute('frfl');
+
+        expect(result.positionHistory).toEqual([
+          { x: 0, y: 0 },
+          { x: 0, y: 1 },
+          { x: 1, y: 1 },
+        ]);
+      });
+    });
+  });
 });
