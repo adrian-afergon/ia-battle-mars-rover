@@ -315,10 +315,10 @@ src/ai-battle/app/
 - [x] Estructura de carpetas creada
 - [x] Scripts de test añadidos a package.json
 
-### Fase 1: Modelado básico ⬜
-- [ ] Tipos básicos definidos
-- [ ] Clase Position con tests
-- [ ] Clase Grid con tests (wrapping incluido)
+### Fase 1: Modelado básico ✅
+- [x] Tipos básicos definidos (Direction, IPosition, ExecutionResult)
+- [x] Clase Position con tests (28 tests: creación, equals, toString)
+- [x] Clase WorldMap con tests (19 tests: validación, obstáculos, wrapping)
 
 ### Fase 2: Rover básico ⬜
 - [ ] Clase Rover con estado inicial
