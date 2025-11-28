@@ -331,4 +331,109 @@ describe('Rover - Fase 2 (Basic)', () => {
       });
     });
   });
+
+  describe('Fase 5: Map Boundaries (Flat Planet)', () => {
+    describe('boundaries prevent movement', () => {
+      it('should not move beyond north boundary', () => {
+        const worldMap = new WorldMap(10, 10);
+        const rover = new Rover({ x: 5, y: 9 }, 'N', worldMap);
+
+        const result = rover.execute('f');
+
+        expect(rover.getPosition()).toEqual({ x: 5, y: 9 });
+        expect(result.status).toBe('obstacle-detected');
+      });
+
+      it('should not move beyond south boundary', () => {
+        const worldMap = new WorldMap(10, 10);
+        const rover = new Rover({ x: 5, y: 0 }, 'S', worldMap);
+
+        const result = rover.execute('f');
+
+        expect(rover.getPosition()).toEqual({ x: 5, y: 0 });
+        expect(result.status).toBe('obstacle-detected');
+      });
+
+      it('should not move beyond east boundary', () => {
+        const worldMap = new WorldMap(10, 10);
+        const rover = new Rover({ x: 9, y: 5 }, 'E', worldMap);
+
+        const result = rover.execute('f');
+
+        expect(rover.getPosition()).toEqual({ x: 9, y: 5 });
+        expect(result.status).toBe('obstacle-detected');
+      });
+
+      it('should not move beyond west boundary', () => {
+        const worldMap = new WorldMap(10, 10);
+        const rover = new Rover({ x: 0, y: 5 }, 'W', worldMap);
+
+        const result = rover.execute('f');
+
+        expect(rover.getPosition()).toEqual({ x: 0, y: 5 });
+        expect(result.status).toBe('obstacle-detected');
+      });
+
+      it('should not move backward beyond boundaries', () => {
+        const worldMap = new WorldMap(10, 10);
+        const rover = new Rover({ x: 5, y: 0 }, 'N', worldMap);
+
+        const result = rover.execute('b');
+
+        expect(rover.getPosition()).toEqual({ x: 5, y: 0 });
+        expect(result.status).toBe('obstacle-detected');
+      });
+    });
+
+    describe('corners and edges', () => {
+      it('should handle corner: northeast', () => {
+        const worldMap = new WorldMap(10, 10);
+        const rover = new Rover({ x: 9, y: 9 }, 'N', worldMap);
+
+        rover.execute('f');
+
+        expect(rover.getPosition()).toEqual({ x: 9, y: 9 });
+      });
+
+      it('should handle corner: southwest', () => {
+        const worldMap = new WorldMap(10, 10);
+        const rover = new Rover({ x: 0, y: 0 }, 'S', worldMap);
+
+        rover.execute('f');
+
+        expect(rover.getPosition()).toEqual({ x: 0, y: 0 });
+      });
+
+      it('should stop at boundary after multiple moves', () => {
+        const worldMap = new WorldMap(10, 10);
+        const rover = new Rover({ x: 5, y: 8 }, 'N', worldMap);
+
+        rover.execute('fff');
+
+        expect(rover.getPosition()).toEqual({ x: 5, y: 9 });
+      });
+    });
+
+    describe('boundary abort sequence', () => {
+      it('should abort sequence when hitting boundary', () => {
+        const worldMap = new WorldMap(10, 10);
+        const rover = new Rover({ x: 5, y: 9 }, 'N', worldMap);
+
+        const result = rover.execute('ffff');
+
+        expect(rover.getPosition()).toEqual({ x: 5, y: 9 });
+        expect(result.status).toBe('obstacle-detected');
+        expect(result.positionHistory).toEqual([{ x: 5, y: 9 }]);
+      });
+
+      it('should report boundary position as obstacle', () => {
+        const worldMap = new WorldMap(10, 10);
+        const rover = new Rover({ x: 5, y: 9 }, 'N', worldMap);
+
+        const result = rover.execute('f');
+
+        expect(result.obstaclePosition).toEqual({ x: 5, y: 10 });
+      });
+    });
+  });
 });

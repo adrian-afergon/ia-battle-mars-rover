@@ -335,9 +335,10 @@ src/ai-battle/app/
 - [x] Movimiento atrás implementado y testeado
 - [x] Comando execute procesa 'f' y 'b' (15 tests de movimiento)
 
-### Fase 5: Wrapping ⬜
-- [ ] Wrapping en todos los bordes testeado
-- [ ] Integración con movimientos
+### Fase 5: Wrapping ✅
+- [x] Bordes actúan como obstáculos (no se continúa, se detiene)
+- [x] Integración con movimientos testeado (10 tests de bordes)
+- [x] Reporte correcto de posición de obstáculo fuera del mapa
 
 ### Fase 6: Obstáculos ⬜
 - [ ] Detección de obstáculos
