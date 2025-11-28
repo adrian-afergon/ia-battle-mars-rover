@@ -324,10 +324,10 @@ src/ai-battle/app/
 - [x] Clase Rover con estado inicial
 - [x] Tests de creación y getters (4 tests)
 
-### Fase 3: Rotación ⬜
-- [ ] Giro izquierda implementado y testeado
-- [ ] Giro derecha implementado y testeado
-- [ ] Comando execute procesa 'l' y 'r'
+### Fase 3: Rotación ✅
+- [x] Giro izquierda implementado y testeado (N->W->S->E->N)
+- [x] Giro derecha implementado y testeado (N->E->S->W->N)
+- [x] Comando execute procesa 'l' y 'r' (14 tests de rotación)
 
 ### Fase 4: Movimiento básico ⬜
 - [ ] Cálculo de siguiente posición
