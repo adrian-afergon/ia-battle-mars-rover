@@ -320,9 +320,9 @@ src/ai-battle/app/
 - [x] Clase Position con tests (28 tests: creación, equals, toString)
 - [x] Clase WorldMap con tests (19 tests: validación, obstáculos, wrapping)
 
-### Fase 2: Rover básico ⬜
-- [ ] Clase Rover con estado inicial
-- [ ] Tests de creación y getters
+### Fase 2: Rover básico ✅
+- [x] Clase Rover con estado inicial
+- [x] Tests de creación y getters (4 tests)
 
 ### Fase 3: Rotación ⬜
 - [ ] Giro izquierda implementado y testeado
