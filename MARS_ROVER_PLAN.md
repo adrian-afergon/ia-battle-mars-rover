@@ -350,10 +350,10 @@ src/ai-battle/app/
 - [x] Tests de casos extremos (grids 1x1, muy grandes, etc)
 - [x] Manejo de errores y edge cases completo
 
-### Fase 8: Documentación ⬜
-- [ ] API pública limpia
-- [ ] README con ejemplos
-- [ ] JSDoc completo
+### Fase 8: Documentación ✅
+- [x] API pública limpia con factory function createRover()
+- [x] README.md con ejemplos, API completa, y casos de uso
+- [x] JSDoc completo en todas las clases y métodos
 
 ### Fase 9: Visualización (opcional) ⬜
 - [ ] Componente React del grid
