@@ -310,10 +310,10 @@ src/ai-battle/app/
 
 ## Checklist de progreso
 
-### Fase 0: Preparación ⬜
-- [ ] Jest instalado y configurado
-- [ ] Estructura de carpetas creada
-- [ ] Primer test ejecutándose
+### Fase 0: Preparación ✅
+- [x] Vitest instalado y configurado
+- [x] Estructura de carpetas creada
+- [x] Scripts de test añadidos a package.json
 
 ### Fase 1: Modelado básico ⬜
 - [ ] Tipos básicos definidos
