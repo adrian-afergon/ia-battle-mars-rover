@@ -345,10 +345,10 @@ src/ai-battle/app/
 - [x] Abortar secuencia al encontrar obstáculo
 - [x] Reportar información de obstáculo (10 tests de obstáculos)
 
-### Fase 7: Integración ⬜
-- [ ] Tests de integración complejos
-- [ ] Tests de casos extremos
-- [ ] Manejo de errores
+### Fase 7: Integración ✅
+- [x] Tests de integración complejos (14 tests)
+- [x] Tests de casos extremos (grids 1x1, muy grandes, etc)
+- [x] Manejo de errores y edge cases completo
 
 ### Fase 8: Documentación ⬜
 - [ ] API pública limpia
