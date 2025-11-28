@@ -436,4 +436,132 @@ describe('Rover - Fase 2 (Basic)', () => {
       });
     });
   });
+
+  describe('Fase 6: Obstacle Detection', () => {
+    describe('obstacle blocking movement', () => {
+      it('should not move into position with obstacle', () => {
+        const worldMap = new WorldMap(10, 10, [{ x: 5, y: 6 }]);
+        const rover = new Rover({ x: 5, y: 5 }, 'N', worldMap);
+
+        const result = rover.execute('f');
+
+        expect(rover.getPosition()).toEqual({ x: 5, y: 5 });
+        expect(result.status).toBe('obstacle-detected');
+      });
+
+      it('should report obstacle position', () => {
+        const worldMap = new WorldMap(10, 10, [{ x: 5, y: 6 }]);
+        const rover = new Rover({ x: 5, y: 5 }, 'N', worldMap);
+
+        const result = rover.execute('f');
+
+        expect(result.obstaclePosition).toEqual({ x: 5, y: 6 });
+      });
+
+      it('should abort sequence when hitting obstacle', () => {
+        const worldMap = new WorldMap(10, 10, [{ x: 5, y: 6 }]);
+        const rover = new Rover({ x: 5, y: 5 }, 'N', worldMap);
+
+        const result = rover.execute('fff');
+
+        expect(rover.getPosition()).toEqual({ x: 5, y: 5 });
+        expect(result.positionHistory).toEqual([{ x: 5, y: 5 }]);
+        expect(result.status).toBe('obstacle-detected');
+      });
+
+      it('should move up to last valid position before obstacle', () => {
+        const worldMap = new WorldMap(10, 10, [{ x: 5, y: 7 }]);
+        const rover = new Rover({ x: 5, y: 5 }, 'N', worldMap);
+
+        const result = rover.execute('fff');
+
+        expect(rover.getPosition()).toEqual({ x: 5, y: 6 });
+        expect(result.positionHistory).toEqual([
+          { x: 5, y: 5 },
+          { x: 5, y: 6 },
+        ]);
+      });
+
+      it('should detect obstacle when moving backward', () => {
+        const worldMap = new WorldMap(10, 10, [{ x: 5, y: 4 }]);
+        const rover = new Rover({ x: 5, y: 5 }, 'N', worldMap);
+
+        const result = rover.execute('b');
+
+        expect(rover.getPosition()).toEqual({ x: 5, y: 5 });
+        expect(result.status).toBe('obstacle-detected');
+      });
+    });
+
+    describe('multiple obstacles', () => {
+      it('should handle multiple obstacles', () => {
+        const obstacles = [
+          { x: 5, y: 6 },
+          { x: 6, y: 5 },
+          { x: 4, y: 5 },
+        ];
+        const worldMap = new WorldMap(10, 10, obstacles);
+        const rover = new Rover({ x: 5, y: 5 }, 'N', worldMap);
+
+        const result = rover.execute('f');
+
+        expect(rover.getPosition()).toEqual({ x: 5, y: 5 });
+        expect(result.status).toBe('obstacle-detected');
+      });
+
+      it('should navigate around obstacles with valid path', () => {
+        const obstacles = [{ x: 5, y: 7 }];
+        const worldMap = new WorldMap(10, 10, obstacles);
+        const rover = new Rover({ x: 5, y: 5 }, 'N', worldMap);
+
+        rover.execute('frfb');
+
+        // f: (5,6), r: turn to E, f: (6,6), b: (5,6)
+        expect(rover.getPosition()).toEqual({ x: 5, y: 6 });
+      });
+    });
+
+    describe('obstacle sequence behavior', () => {
+      it('should execute commands before hitting obstacle', () => {
+        const worldMap = new WorldMap(10, 10, [{ x: 5, y: 7 }]);
+        const rover = new Rover({ x: 5, y: 5 }, 'N', worldMap);
+
+        const result = rover.execute('fffrff');
+
+        // f: (5,6), f: (5,7) would hit obstacle, stops at (5,6)
+        // The sequence aborts, so r and ff are not executed
+        expect(rover.getPosition()).toEqual({ x: 5, y: 6 });
+        expect(rover.getDirection()).toBe('N');
+        expect(result.positionHistory).toHaveLength(2);
+      });
+
+      it('should execute rotations before obstacle is encountered', () => {
+        const worldMap = new WorldMap(10, 10, [{ x: 6, y: 5 }]);
+        const rover = new Rover({ x: 5, y: 5 }, 'N', worldMap);
+
+        rover.execute('rrffrf');
+
+        // r: turn to E, r: turn to S, f: (5,4), f: (5,3), r: turn to W, f: (4,3)
+        expect(rover.getPosition()).toEqual({ x: 4, y: 3 });
+        expect(rover.getDirection()).toBe('W');
+      });
+    });
+
+    describe('edge cases with obstacles', () => {
+      it('should handle rover surrounded by obstacles', () => {
+        const obstacles = [
+          { x: 5, y: 6 }, // North
+          { x: 5, y: 4 }, // South
+          { x: 6, y: 5 }, // East
+          { x: 4, y: 5 }, // West
+        ];
+        const worldMap = new WorldMap(10, 10, obstacles);
+        const rover = new Rover({ x: 5, y: 5 }, 'N', worldMap);
+
+        let result = rover.execute('f');
+        expect(result.status).toBe('obstacle-detected');
+        expect(rover.getPosition()).toEqual({ x: 5, y: 5 });
+      });
+    });
+  });
 });

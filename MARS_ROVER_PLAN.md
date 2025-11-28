@@ -340,10 +340,10 @@ src/ai-battle/app/
 - [x] Integración con movimientos testeado (10 tests de bordes)
 - [x] Reporte correcto de posición de obstáculo fuera del mapa
 
-### Fase 6: Obstáculos ⬜
-- [ ] Detección de obstáculos
-- [ ] Abortar secuencia al encontrar obstáculo
-- [ ] Reportar información de obstáculo
+### Fase 6: Obstáculos ✅
+- [x] Detección de obstáculos
+- [x] Abortar secuencia al encontrar obstáculo
+- [x] Reportar información de obstáculo (10 tests de obstáculos)
 
 ### Fase 7: Integración ⬜
 - [ ] Tests de integración complejos
